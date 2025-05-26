@@ -66,7 +66,7 @@ export default function App() {
             flexDirection: "column",
             justifyContent: "end"
           }}
-          key={searchResults[virtualItem.index].spotify_id}>
+          key={virtualItem.key}>
             <SearchResultCard song={searchResults[virtualItem.index]} />
           </div>
         ))}
