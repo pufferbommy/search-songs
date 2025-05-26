@@ -12,6 +12,7 @@
   "dependencies": {
     "@tanstack/react-virtual": "^3.13.9",
     "csv-to-js-parser": "^2.3.7",
+    "fuse.js": "^7.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },

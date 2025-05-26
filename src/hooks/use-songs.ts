@@ -11,8 +11,12 @@ export const useSongs = () => {
       signal: controller.signal,
     })
       .then((res) => res.json())
-      .then((data) => {
-        setSongs(data);
+      .then((data: Song[]) => {
+        setSongs(data.map((song) => ({
+          ...song,
+          lowerCaseName: song.name.toLowerCase(),
+          lowerCaseArtists: song.artists.toLowerCase(),
+        })));
       });
   
     return () => controller.abort();

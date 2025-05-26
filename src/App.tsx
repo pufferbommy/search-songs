@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
+import Fuse from "fuse.js";
 
 import styles from "./App.module.css";
 import type { Song } from "./types/song";
@@ -20,19 +21,29 @@ export default function App() {
     estimateSize: (i) => i === 0 ? 114 : 114+16,
   });
 
+  const fuse = useMemo(() => {
+    if (!songs.length) return null;
+    return new Fuse(songs, {
+      keys: ["name", "artists"],
+      threshold: 0.3,
+      includeScore: true,
+    });
+  }, [songs])
+
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const results = songs.filter((song) => {
-        return (
-          song.name.toLowerCase().includes(search.toLowerCase()) ||
-          song.artists.toLowerCase().includes(search.toLowerCase())
-        );
-      });
+      if (!search || !fuse) {
+        setSearchResults([]);
+        return;
+      }
+
+      const searchValue = search.trim().toLowerCase()
+      const results = fuse.search(searchValue).map((item) => item.item)
       setSearchResults(results);
-    }, 500);
+    }, 200);
 
     return () => clearTimeout(timeout);
-  }, [search, songs]);
+  }, [search, fuse]);
 
   return (
     <main className={styles.main}>
