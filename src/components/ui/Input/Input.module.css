@@ -1,0 +1,22 @@
+.inputWrapper {
+  position: relative;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 1rem;
+}
+
+.input {
+  border: none;
+  width: 100%;
+}
+
+.input:focus {
+  outline: none;
+}
+
+.input > svg {
+  padding-left: 0.5rem;
+  display: inline-block;
+}
